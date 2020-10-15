@@ -1,8 +1,12 @@
+import { AppsRounded } from '@material-ui/icons';
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counterSlice';
+import { app } from 'firebase';
+import userReducer from '../features/userSlice';
+import appReducer from '../features/appSlice';
 
 export default configureStore({
   reducer: {
-    counter: counterReducer,
+    user: userReducer,
+    app: appReducer,
   },
 });

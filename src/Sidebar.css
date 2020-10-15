@@ -70,6 +70,13 @@
   padding: 10px;
 }
 
+.sidebar__voiceIcons > .MuiSvgIcon-root:hover,
+.sidebar__profileIcons > .MuiSvgIcon-root:hover {
+  padding: 10px;
+  color:  white;
+  cursor: pointer;
+}
+
 .sidebar__profileInfo {
   flex: 1;
   padding: 10px;

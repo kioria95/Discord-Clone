@@ -6,7 +6,10 @@ import Chat from "./Chat";
 function App() {
   return (
     <div className="app">
+      {/*Sidebar */}
       <Sidebar />
+
+      {/*Chat */}
       <Chat />
     </div>
   );

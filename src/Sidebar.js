@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import "./Sidebar.css";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
@@ -10,12 +10,25 @@ import { Avatar } from "@material-ui/core";
 import MicIcon from "@material-ui/icons/Mic";
 import HeadsetIcon from "@material-ui/icons/Headset";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { useSelector } from "react-redux";
+import { selectUser } from "./features/userSlice";
+import { auth } from "./firebase";
+import db from "./firebase"
 
 function Sidebar() {
+  const user = useSelector(selectUser);
+  const [channels, setChannels] = useState("");
+
+  useEffect(() => {
+    db.channels("channels").onSnapshot((snapshot) =>
+      setChannels(snapshot.docs.map((doc) => doc.data()))
+    );
+  }, []);
+
   return (
     <div className="sidebar">
       <div className="sidebar__top">
-        <h3>Kenneth Kioria</h3>
+        <h3>The Knights</h3>
         <ExpandMoreIcon />
       </div>
 
@@ -33,6 +46,12 @@ function Sidebar() {
           <SidebarChannel channel="YouTube" />
           <SidebarChannel channel="Instagram" />
           <SidebarChannel channel="WhatsApp" />
+
+          {channels.map(channel => (
+            <SidebarChannel
+            channel={channel.channelName}
+            />
+          ))}
         </div>
       </div>
 
@@ -53,10 +72,15 @@ function Sidebar() {
       </div>
 
       <div className="sidebar__profile">
-        <Avatar />
+        <Avatar
+          onClick={() => {
+            auth.signOut();
+          }}
+          src={user.photo}
+        />
         <div className="sidebar__profileInfo">
-          <h3>Ken Kioria</h3>
-          <p>#thisismyID</p>
+          <h3>{user.displayName}</h3>
+          <p>#{user.uid.substring(0, 5)}</p>
         </div>
 
         <div className="sidebar__profileIcons">

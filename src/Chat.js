@@ -7,8 +7,11 @@ import GifIcon from "@material-ui/icons/Gif";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 import Message from "./Message";
 import db from "./firebase";
+import {useSelector} from "react-redux"
+import { selectUser } from "./features/userSlice";
 
 function Chat() {
+  const user = useSelector(selectUser)
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
@@ -28,7 +31,9 @@ function Chat() {
       <ChatHeader />
       <div className="chat__messages">
         {messages.map((message) => (
-          <Message message={message.message}
+          <Message 
+          src={user.photo}
+          message={message.message}
           timestamp ={message.timestamp} />
         ))}
       </div>
